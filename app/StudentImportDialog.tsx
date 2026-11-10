@@ -122,14 +122,15 @@ export default function StudentImportDialog({ students, onClose, onApply }: Stud
           </button>
         </div>
         <p className="import-intro">
-          Upload a CSV, Excel (.xlsx), or text-based PDF with one student per row (up to 5 MB and 500 students).
-          Excel imports the first worksheet. Matching names will be updated; blank fields keep their saved values.
+          Upload a CSV, Excel (.xlsx), or text-based PDF with one student per row or separate Boys and Girls columns
+          (up to 5 MB and 500 students). Excel imports the first worksheet. Matching names will be updated; blank
+          fields keep their saved values.
         </p>
         <div className="import-guidance">
-          <b>Required column: Name</b>
+          <b>Required: Name column, or separate Boys and Girls columns</b>
           <span>
             Recognized headers: Student ID, Name, Father&apos;s Name, Age, Gender, Photo URL, Current Score, Score
-            History.
+            History, Boys, and Girls.
           </span>
           <span>PDF files need selectable text and clear columns. Scanned/photo PDFs are not supported.</span>
         </div>

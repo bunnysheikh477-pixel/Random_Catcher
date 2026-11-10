@@ -10,7 +10,7 @@ const MAX_FILE_BYTES = 5 * 1024 * 1024;
 const MAX_RECORDS = 500;
 const MAX_PDF_PAGES = 50;
 
-type ImportField = "id" | "name" | "father" | "age" | "gender" | "photo" | "currentScore" | "scores";
+type ImportField = "id" | "name" | "boys" | "girls" | "father" | "age" | "gender" | "photo" | "currentScore" | "scores";
 
 type ImportRecord = {
   rowNumber: number;
@@ -27,6 +27,8 @@ type ImportRecord = {
 const aliases: Record<ImportField, string[]> = {
   id: ["id", "studentid", "studentnumber", "rollno", "rollnumber", "roll", "admissionnumber"],
   name: ["name", "studentname", "fullname", "studentfullname"],
+  boys: ["boy", "boys", "male", "males", "boynames", "boysstudents", "malestudents"],
+  girls: ["girl", "girls", "female", "females", "girlnames", "girlsstudents", "femalestudents"],
   father: ["father", "fathername", "fathersname", "guardian", "guardianname", "parentname"],
   age: ["age"],
   gender: ["gender", "sex"],
@@ -94,7 +96,7 @@ function findHeader(rows: string[][]) {
       const match = (Object.keys(aliases) as ImportField[]).find((field) => aliases[field].includes(header));
       if (match && !indexes.has(match)) indexes.set(match, columnIndex);
     }
-    if (indexes.has("name")) return { rowIndex, indexes };
+    if (indexes.has("name") || (indexes.has("boys") && indexes.has("girls"))) return { rowIndex, indexes };
   }
   return null;
 }
@@ -108,86 +110,99 @@ function parseScore(value: string) {
 function parseRows(rows: string[][]) {
   const header = findHeader(rows);
   if (!header) {
-    return { records: [] as ImportRecord[], errors: ["A header row with a Name or Student Name column was not found."] };
+    return {
+      records: [] as ImportRecord[],
+      errors: ["A header row with a Name/Student Name column or Boys and Girls columns was not found."],
+    };
   }
 
   const records: ImportRecord[] = [];
   const errors: string[] = [];
   const seenNames = new Set<string>();
+  const hasSeparateGenderColumns = !header.indexes.has("name");
   for (let rowIndex = header.rowIndex + 1; rowIndex < rows.length; rowIndex += 1) {
     const cells = rows[rowIndex];
     if (!cells.some((cell) => cell.trim() !== "")) continue;
     const lineNumber = rowIndex + 1;
     const get = (field: ImportField) => cells[header.indexes.get(field) ?? -1]?.trim() ?? "";
-    const name = get("name");
-    if (!name) {
-      errors.push(`Row ${lineNumber}: name is empty.`);
-      continue;
-    }
-    if (normalizeHeader(name) === "name" || normalizeHeader(name) === "studentname") continue;
-    const normalizedName = name.trim().toLowerCase();
-    if (seenNames.has(normalizedName)) {
-      errors.push(`Row ${lineNumber}: "${name}" appears more than once in this file.`);
-      continue;
-    }
-    seenNames.add(normalizedName);
+    const studentsInRow = hasSeparateGenderColumns
+      ? [
+          { name: get("boys"), gender: "Boy" as const },
+          { name: get("girls"), gender: "Girl" as const },
+        ].filter((student) => student.name !== "")
+      : [{ name: get("name"), gender: undefined }];
 
-    const record: ImportRecord = { rowNumber: lineNumber, name };
-    const id = get("id");
-    const father = get("father");
-    const ageValue = get("age");
-    const genderValue = get("gender").toLowerCase();
-    const photo = get("photo");
-    const currentScoreValue = get("currentScore");
-    const scoresValue = get("scores");
-    if (id) record.id = id;
-    if (father) record.father = father;
-    if (photo) record.photo = photo;
-
-    if (ageValue) {
-      const age = Number(ageValue);
-      if (!Number.isInteger(age) || age < 1 || age > 120) {
-        errors.push(`Row ${lineNumber}: age must be a whole number between 1 and 120.`);
+    for (const student of studentsInRow) {
+      const { name } = student;
+      if (!name) {
+        errors.push(`Row ${lineNumber}: name is empty.`);
         continue;
       }
-      record.age = age;
-    }
-
-    if (genderValue) {
-      if (["boy", "male", "m"].includes(genderValue)) record.gender = "Boy";
-      else if (["girl", "female", "f"].includes(genderValue)) record.gender = "Girl";
-      else {
-        errors.push(`Row ${lineNumber}: gender must be Boy or Girl.`);
+      if (normalizeHeader(name) === "name" || normalizeHeader(name) === "studentname") continue;
+      const normalizedName = name.trim().toLowerCase();
+      if (seenNames.has(normalizedName)) {
+        errors.push(`Row ${lineNumber}: "${name}" appears more than once in this file.`);
         continue;
       }
-    }
+      seenNames.add(normalizedName);
 
-    if (currentScoreValue) {
-      const score = parseScore(currentScoreValue);
-      if (score === null) {
-        errors.push(`Row ${lineNumber}: current score must be between 0 and 100.`);
+      const record: ImportRecord = { rowNumber: lineNumber, name, ...(student.gender ? { gender: student.gender } : {}) };
+      const id = get("id");
+      const father = get("father");
+      const ageValue = get("age");
+      const genderValue = get("gender").toLowerCase();
+      const photo = get("photo");
+      const currentScoreValue = get("currentScore");
+      const scoresValue = get("scores");
+      if (id) record.id = id;
+      if (father) record.father = father;
+      if (photo) record.photo = photo;
+
+      if (ageValue) {
+        const age = Number(ageValue);
+        if (!Number.isInteger(age) || age < 1 || age > 120) {
+          errors.push(`Row ${lineNumber}: age must be a whole number between 1 and 120.`);
+          continue;
+        }
+        record.age = age;
+      }
+
+      if (genderValue) {
+        if (["boy", "male", "m"].includes(genderValue)) record.gender = "Boy";
+        else if (["girl", "female", "f"].includes(genderValue)) record.gender = "Girl";
+        else {
+          errors.push(`Row ${lineNumber}: gender must be Boy or Girl.`);
+          continue;
+        }
+      }
+
+      if (currentScoreValue) {
+        const score = parseScore(currentScoreValue);
+        if (score === null) {
+          errors.push(`Row ${lineNumber}: current score must be between 0 and 100.`);
+          continue;
+        }
+        if (score !== undefined) record.currentScore = score;
+      }
+
+      if (scoresValue) {
+        const scores = scoresValue.split(/[;,|]/).map((value) => parseScore(value));
+        if (scores.some((score) => score === null || score === undefined)) {
+          errors.push(`Row ${lineNumber}: score history must contain scores from 0 to 100, separated by commas or semicolons.`);
+          continue;
+        }
+        record.scores = scores.filter((score): score is number => score !== null && score !== undefined);
+      }
+
+      if (record.photo && (!/^https?:\/\//i.test(record.photo) || record.photo.length > 2048)) {
+        errors.push(`Row ${lineNumber}: photo URL must begin with http:// or https:// and be no longer than 2048 characters.`);
         continue;
       }
-      if (score !== undefined) record.currentScore = score;
-    }
 
-    if (scoresValue) {
-      const scores = scoresValue.split(/[;,|]/).map((value) => parseScore(value));
-      if (scores.some((score) => score === null || score === undefined)) {
-        errors.push(`Row ${lineNumber}: score history must contain scores from 0 to 100, separated by commas or semicolons.`);
-        continue;
+      records.push(record);
+      if (records.length > MAX_RECORDS) {
+        return { records: [] as ImportRecord[], errors: [`Import is limited to ${MAX_RECORDS} students per file.`] };
       }
-      record.scores = scores.filter((score): score is number => score !== null && score !== undefined);
-    }
-
-    if (record.photo && (!/^https?:\/\//i.test(record.photo) || record.photo.length > 2048)) {
-      errors.push(`Row ${lineNumber}: photo URL must begin with http:// or https:// and be no longer than 2048 characters.`);
-      continue;
-    }
-
-    records.push(record);
-    if (records.length > MAX_RECORDS) {
-      return { records: [] as ImportRecord[], errors: [`Import is limited to ${MAX_RECORDS} students per file.`] };
     }
   }
 
