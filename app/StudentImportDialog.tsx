@@ -24,7 +24,7 @@ type ImportResponse = {
 type StudentImportDialogProps = {
   students: { name: string; id: string }[];
   onClose: () => void;
-  onApply: (records: ImportedStudentRecord[], errors: string[]) => void;
+  onApply: (records: ImportedStudentRecord[], errors: string[], replaceExisting: boolean) => void;
 };
 
 export default function StudentImportDialog({ students, onClose, onApply }: StudentImportDialogProps) {
@@ -33,13 +33,17 @@ export default function StudentImportDialog({ students, onClose, onApply }: Stud
   const [records, setRecords] = useState<ImportedStudentRecord[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [replaceExisting, setReplaceExisting] = useState(false);
   const preview = useMemo(
     () =>
       records.map((record) => ({
         record,
-        matches: students.filter((student) => student.name.trim().toLowerCase() === record.name.trim().toLowerCase()),
+        matches: replaceExisting
+          ? []
+          : students.filter((student) => student.name.trim().toLowerCase() === record.name.trim().toLowerCase()),
         idConflict: Boolean(
-          record.id &&
+          !replaceExisting &&
+            record.id &&
             students.some(
               (student) =>
                 student.id.toLowerCase() === record.id!.toLowerCase() &&
@@ -47,7 +51,7 @@ export default function StudentImportDialog({ students, onClose, onApply }: Stud
             ),
         ),
       })),
-    [records, students],
+    [records, replaceExisting, students],
   );
   const newCount = preview.filter(({ matches, idConflict }) => matches.length === 0 && !idConflict).length;
   const updateCount = preview.filter(({ matches, idConflict }) => matches.length === 1 && !idConflict).length;
@@ -85,6 +89,18 @@ export default function StudentImportDialog({ students, onClose, onApply }: Stud
     link.download = "classmate-students-template.csv";
     link.click();
     window.setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+
+  function applyImport() {
+    if (
+      replaceExisting &&
+      !window.confirm(
+        `Replace all ${students.length} current student(s) with the ${records.length} valid student(s) from this file?`,
+      )
+    ) {
+      return;
+    }
+    onApply(records, errors, replaceExisting);
   }
 
   return (
@@ -134,6 +150,17 @@ export default function StudentImportDialog({ students, onClose, onApply }: Stud
         </label>
         {fileName && <p className="import-filename">Selected: {fileName}</p>}
         {loading && <p className="import-status">Reading file and checking student rows...</p>}
+        <label className="import-replace-option">
+          <input
+            type="checkbox"
+            checked={replaceExisting}
+            onChange={(event) => setReplaceExisting(event.target.checked)}
+          />
+          <span>
+            <b>Replace all existing students</b>
+            <small>Remove the current student list and keep only valid students from this file.</small>
+          </span>
+        </label>
         {records.length > 0 && (
           <>
             <div className="import-summary">
@@ -177,9 +204,10 @@ export default function StudentImportDialog({ students, onClose, onApply }: Stud
           <button
             className="primary-btn"
             disabled={loading || records.length === 0}
-            onClick={() => onApply(records, errors)}
+            onClick={applyImport}
           >
-            <FileUp size={16} /> Import {records.length} student{records.length === 1 ? "" : "s"}
+            <FileUp size={16} /> {replaceExisting ? "Replace with" : "Import"} {records.length} student
+            {records.length === 1 ? "" : "s"}
           </button>
         </div>
       </section>
