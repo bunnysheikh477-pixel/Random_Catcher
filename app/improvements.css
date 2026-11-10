@@ -361,6 +361,68 @@ td {
   line-height: 1.5;
 }
 
+.draw-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.draw-actions .secondary-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.draw-lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.draw-list-panel {
+  min-width: 0;
+}
+
+.draw-list-panel .panel-head {
+  align-items: flex-start;
+}
+
+.draw-list-panel .panel-head p {
+  line-height: 1.5;
+}
+
+.draw-list-count {
+  display: grid;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 9px;
+  background: #edf1ff;
+  color: #4169e1;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.draw-student-list {
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.draw-list-empty {
+  margin: 0;
+  padding: 14px 0 4px;
+  color: #8993a5;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+  .draw-lists {
+    grid-template-columns: 1fr;
+  }
+}
+
 .import-filename,
 .import-status {
   margin: 9px 0;
