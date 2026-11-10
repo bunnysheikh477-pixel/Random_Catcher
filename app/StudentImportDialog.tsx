@@ -130,7 +130,7 @@ export default function StudentImportDialog({ students, onClose, onApply }: Stud
           <b>Required: Name column, or separate Boys and Girls columns</b>
           <span>
             Recognized headers: Student ID, Name, Father&apos;s Name, Age, Gender, Photo URL, Current Score, Score
-            History, Boys, and Girls.
+            History, Boys, and Girls. Boys/Girls cells may also contain a roll number followed by a hyphen and name.
           </span>
           <span>PDF files need selectable text and clear columns. Scanned/photo PDFs are not supported.</span>
         </div>

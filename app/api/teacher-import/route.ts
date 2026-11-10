@@ -50,6 +50,8 @@ function fieldForHeader(value: unknown): ImportField | undefined {
   const header = normalizeHeader(value);
   const exactMatch = (Object.keys(aliases) as ImportField[]).find((field) => aliases[field].includes(header));
   if (exactMatch) return exactMatch;
+  if (header.includes("girl") && header.includes("name")) return "girls";
+  if ((header.includes("boy") || header.includes("male")) && header.includes("name")) return "boys";
   if (header.includes("student") && header.includes("name")) return "name";
   if (
     (header.includes("roll") || header.includes("registration") || header.includes("admission")) &&
@@ -58,6 +60,12 @@ function fieldForHeader(value: unknown): ImportField | undefined {
     return "id";
   }
   return undefined;
+}
+
+function parseGenderColumnStudent(value: string) {
+  const match = value.match(/^\s*([A-Za-z0-9/]+)\s*[-–—]\s*(.+?)\s*$/);
+  if (!match || !/\d/.test(match[1])) return { name: value };
+  return { id: match[1], name: match[2] };
 }
 
 function cellText(value: ExcelJS.CellValue | string | number | null | undefined) {
@@ -145,14 +153,17 @@ function parseRows(rows: string[][]) {
     if (!cells.some((cell) => cell.trim() !== "")) continue;
     const lineNumber = rowIndex + 1;
     const get = (field: ImportField) => cells[header.indexes.get(field) ?? -1]?.trim() ?? "";
-    const studentsInRow = hasSeparateGenderColumns
+    const studentsInRow: { name: string; gender?: "Boy" | "Girl"; id?: string }[] = hasSeparateGenderColumns
       ? [
           { name: get("boys"), gender: "Boy" as const },
           { name: get("girls"), gender: "Girl" as const },
         ].filter((student) => student.name !== "")
       : [{ name: get("name"), gender: undefined }];
 
-    for (const student of studentsInRow) {
+    for (const entry of studentsInRow) {
+      const student = hasSeparateGenderColumns
+        ? { ...parseGenderColumnStudent(entry.name), gender: entry.gender }
+        : entry;
       const { name } = student;
       if (!name) {
         errors.push(`Row ${lineNumber}: name is empty.`);
@@ -167,7 +178,7 @@ function parseRows(rows: string[][]) {
       seenNames.add(normalizedName);
 
       const record: ImportRecord = { rowNumber: lineNumber, name, ...(student.gender ? { gender: student.gender } : {}) };
-      const id = get("id");
+      const id = student.id ?? get("id");
       const father = get("father");
       const ageValue = get("age");
       const genderValue = get("gender").toLowerCase();
