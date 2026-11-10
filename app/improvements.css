@@ -1,0 +1,1144 @@
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.eyebrow {
+  font-size: 12px;
+}
+
+.side-label {
+  font-size: 11px;
+}
+
+.nav-item {
+  min-height: 46px;
+  font-size: 14px;
+}
+
+.today {
+  font-size: 13px;
+}
+
+.stat-label,
+.student-row small,
+.quick-action small,
+.teacher-mini small,
+.panel-head p {
+  font-size: 13px;
+}
+
+.student-row b,
+.quick-action b {
+  font-size: 14px;
+}
+
+.stat-note {
+  font-size: 12px;
+}
+
+.topbar > div:first-child {
+  font-size: 14px;
+}
+
+.content {
+  width: 100%;
+}
+
+.welcome-row h1 {
+  font-size: clamp(28px, 2.5vw, 36px);
+}
+
+.welcome-row p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.primary-btn,
+.secondary-btn {
+  min-height: 44px;
+  font-size: 14px;
+}
+
+.stat-card {
+  padding: 22px;
+}
+
+.stat-label {
+  line-height: 1.4;
+}
+
+.stat-value {
+  font-size: 30px;
+}
+
+.panel {
+  padding: 24px;
+}
+
+.panel-head h3 {
+  font-size: 17px;
+}
+
+.panel-head p {
+  line-height: 1.5;
+}
+
+.search-box {
+  width: min(440px, 100%);
+  min-height: 44px;
+}
+
+.search-box input {
+  font-size: 14px;
+}
+
+.count-label {
+  font-size: 13px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  min-width: 760px;
+}
+
+th {
+  font-size: 11px;
+  padding: 15px 18px;
+}
+
+td {
+  padding: 15px 18px;
+  font-size: 14px;
+}
+
+.table-student img {
+  width: 42px;
+  height: 42px;
+}
+
+.table-student b {
+  font-size: 14px;
+}
+
+.table-student small {
+  font-size: 12px;
+}
+
+.gender-tag {
+  font-size: 12px;
+}
+
+.action-buttons button {
+  width: 36px;
+  height: 36px;
+}
+
+.stat-grid {
+  gap: 18px;
+}
+
+.dashboard-grid,
+.stat-grid {
+  min-width: 0;
+}
+
+.profile-card {
+  padding: 28px;
+}
+
+.profile-details small,
+.profile-details b {
+  font-size: 14px;
+}
+
+.text-btn {
+  min-height: 42px;
+  font-size: 14px;
+}
+
+.photo-upload-field {
+  display: grid;
+  gap: 9px;
+}
+
+.photo-upload-field > label:first-child {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: #5b677b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.photo-upload-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.photo-upload-preview {
+  width: 58px;
+  height: 58px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.photo-upload-button {
+  min-height: 44px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #dfe5ef;
+  border-radius: 8px;
+  background: #f8f9fc;
+  color: #33415b;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.photo-upload-button:hover {
+  border-color: #b7c5e8;
+  background: #f1f4fb;
+}
+
+.photo-upload-button input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.photo-upload-button:focus-within {
+  outline: 3px solid #4169e1;
+  outline-offset: 2px;
+}
+
+.photo-upload-hint {
+  color: #8993a5;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.photo-remove {
+  min-height: 40px;
+}
+
+.directory-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.directory-tools .search-box {
+  flex: 1 1 240px;
+}
+
+.import-open {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0 14px;
+  white-space: nowrap;
+}
+
+.import-modal {
+  width: min(660px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.import-intro {
+  margin: 0 0 16px;
+  color: #78859a;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.import-guidance {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid #e8edf7;
+  border-radius: 9px;
+  background: #f7f9fd;
+  color: #68758a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.import-guidance b {
+  color: #293752;
+}
+
+.import-template {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 13px 0;
+  color: #4169e1;
+}
+
+.import-file-label {
+  display: grid;
+  gap: 8px;
+  color: #293752;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.import-file-label input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px dashed #cbd4e4;
+  border-radius: 8px;
+  background: #fbfcfe;
+  color: #68758a;
+  font-size: 13px;
+}
+
+.import-file-label input::file-selector-button {
+  min-height: 30px;
+  margin-right: 10px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #edf1ff;
+  color: #3658ad;
+  font: inherit;
+  cursor: pointer;
+}
+
+.import-filename,
+.import-status {
+  margin: 9px 0;
+  color: #68758a;
+  font-size: 13px;
+}
+
+.import-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 16px 0 8px;
+  color: #293752;
+  font-size: 13px;
+}
+
+.import-summary span {
+  color: #68758a;
+  text-align: right;
+}
+
+.import-preview {
+  max-height: 230px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.import-preview > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.import-preview > div:last-of-type {
+  border-bottom: 0;
+}
+
+.import-preview > div > span,
+.import-preview small {
+  display: grid;
+  gap: 3px;
+}
+
+.import-preview small {
+  color: #8591a3;
+  font-size: 12px;
+}
+
+.import-preview strong {
+  color: #39815f;
+  font-size: 12px;
+}
+
+.import-preview .import-ambiguous {
+  color: #a75e00;
+}
+
+.import-preview > p {
+  margin: 0;
+  padding: 10px 12px;
+  color: #78859a;
+  font-size: 12px;
+}
+
+.import-errors {
+  max-height: 130px;
+  overflow-y: auto;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid #f3d0c8;
+  border-radius: 8px;
+  background: #fff8f6;
+  color: #9c3d2c;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.import-errors p {
+  margin: 3px 0;
+}
+
+.is-clickable {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.is-clickable:hover,
+.is-clickable:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px #1d2d4b20;
+}
+
+.is-clickable:focus-visible {
+  outline: 3px solid #4169e1;
+  outline-offset: 3px;
+}
+
+.profile-modal {
+  width: min(760px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.profile-modal-student {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.profile-modal-student img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-modal-student div,
+.profile-modal-student span {
+  display: block;
+}
+
+.profile-modal-student div {
+  display: grid;
+  gap: 5px;
+  color: #8290a4;
+  font-size: 13px;
+}
+
+.profile-modal-student b {
+  color: #263650;
+  font-size: 15px;
+}
+
+.profile-score-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0 24px;
+}
+
+.profile-score-grid > div {
+  display: grid;
+  gap: 7px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fbfcfe;
+}
+
+.profile-score-grid small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.profile-score-grid b {
+  color: var(--ink);
+  font-size: 21px;
+}
+
+.profile-score-grid b span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.profile-section-title {
+  margin: 22px 0 10px;
+  color: #263650;
+  font-size: 16px;
+}
+
+.score-history {
+  display: grid;
+  gap: 8px;
+}
+
+.score-history > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: #68758a;
+  font-size: 13px;
+}
+
+.score-history b {
+  margin-left: auto;
+  color: #263650;
+}
+
+.current-score-tag {
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: #eaf6f0;
+  color: #378562;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.teacher-login-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #f7f8fb;
+}
+
+.teacher-login-card {
+  width: min(440px, 100%);
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 16px 50px #1d2d4b10;
+}
+
+.teacher-login-card .brand {
+  margin-bottom: 36px;
+}
+
+.teacher-login-card h1 {
+  margin: 12px 0;
+  color: var(--ink);
+  font: 600 32px/1.2 'Playfair Display', serif;
+}
+
+.teacher-login-card > p {
+  margin: 0 0 24px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.teacher-login-card form {
+  display: grid;
+  gap: 12px;
+}
+
+.teacher-login-card label {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.teacher-login-card input {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.teacher-login-card form .primary-btn {
+  min-height: 46px;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.teacher-login-card button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.teacher-login-error {
+  margin: 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.teacher-login-back {
+  margin-top: 18px;
+}
+
+@media (max-width: 680px) {
+  body {
+    font-size: 15px;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    width: 100%;
+    padding: 10px 12px 0;
+    background: var(--navy);
+  }
+
+  .sidebar .brand {
+    padding: 0 4px 10px;
+    font-size: 18px;
+  }
+
+  .sidebar .brand-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .sidebar nav {
+    gap: 5px;
+    margin: 0 -12px;
+    padding: 0 12px 9px;
+    scrollbar-width: thin;
+    scrollbar-color: #53617a transparent;
+  }
+
+  .nav-item {
+    min-height: 42px;
+    height: 42px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .sidebar-bottom {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    display: flex;
+    margin: 0;
+  }
+
+  .sidebar-bottom .teacher-mini {
+    display: none;
+  }
+
+  .sidebar-bottom .logout {
+    width: auto;
+    min-height: 36px;
+    height: 36px;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+
+  .topbar {
+    height: 54px;
+    padding: 0 16px;
+  }
+
+  .topbar > div:first-child {
+    gap: 7px;
+    font-size: 13px;
+  }
+
+  .top-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .content {
+    padding: 24px 16px 36px;
+  }
+
+  .welcome-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .welcome-row h1 {
+    margin: 8px 0;
+    font-size: clamp(26px, 7vw, 32px);
+    line-height: 1.2;
+  }
+
+  .welcome-row p {
+    font-size: 14px;
+  }
+
+  .welcome-row > .primary-btn {
+    align-self: flex-start;
+    min-height: 44px;
+    padding: 0 15px;
+    font-size: 14px;
+    white-space: normal;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .stat-card {
+    min-width: 0;
+    padding: 15px;
+  }
+
+  .stat-icon {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 12px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .stat-value {
+    font-size: 25px;
+  }
+
+  .stat-note {
+    font-size: 11px;
+  }
+
+  .dashboard-grid {
+    gap: 12px;
+  }
+
+  .panel {
+    min-width: 0;
+    padding: 17px;
+  }
+
+  .panel-head {
+    gap: 10px;
+  }
+
+  .panel-head h3 {
+    font-size: 16px;
+  }
+
+  .panel-head p {
+    font-size: 12px;
+  }
+
+  .student-row {
+    gap: 9px;
+    padding: 12px 0;
+  }
+
+  .student-row > img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .student-row b {
+    font-size: 13px;
+  }
+
+  .student-row small {
+    font-size: 11px;
+  }
+
+  .quick-action {
+    min-height: 60px;
+  }
+
+  .quick-action b {
+    font-size: 13px;
+  }
+
+  .quick-action small {
+    font-size: 11px;
+  }
+
+  .directory-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .directory-tools .search-box {
+    width: auto;
+    flex: 1 1 220px;
+    min-height: 46px;
+  }
+
+  .search-box input {
+    font-size: 14px;
+  }
+
+  .count-label {
+    align-self: center;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .import-open {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .import-modal {
+    width: 100%;
+    max-height: 88vh;
+    padding: 18px;
+  }
+
+  .import-intro {
+    font-size: 13px;
+  }
+
+  .import-guidance {
+    padding: 11px;
+    font-size: 12px;
+  }
+
+  .import-summary {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .import-summary span {
+    text-align: left;
+  }
+
+  .modal-actions .primary-btn {
+    white-space: normal;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+
+  table {
+    width: 100%;
+    min-width: 0;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody {
+    display: grid;
+    gap: 10px;
+  }
+
+  tbody tr {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px #1d2d4b08;
+  }
+
+  tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 43px;
+    padding: 9px 13px;
+    font-size: 13px;
+  }
+
+  tbody td:first-child {
+    display: block;
+    padding: 13px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  tbody td:not(:first-child)::before {
+    flex: 0 0 108px;
+    color: #78859a;
+    content: "";
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  tbody td:nth-child(2)::before {
+    content: "Father";
+  }
+
+  tbody td:nth-child(3)::before {
+    content: "Age";
+  }
+
+  tbody td:nth-child(4)::before {
+    content: "Gender";
+  }
+
+  tbody td:nth-child(5)::before {
+    content: "Latest score";
+  }
+
+  tbody td:nth-child(6)::before {
+    content: "Actions";
+  }
+
+  tbody td:last-child {
+    border-bottom: 0;
+  }
+
+  .table-student {
+    gap: 11px;
+  }
+
+  .table-student img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .table-student b {
+    font-size: 14px;
+  }
+
+  .table-student small {
+    font-size: 12px;
+  }
+
+  .action-buttons {
+    gap: 7px;
+  }
+
+  .action-buttons button {
+    width: 38px;
+    height: 38px;
+  }
+
+  .profile-modal {
+    width: 100%;
+    max-height: 88vh;
+    padding: 18px;
+  }
+
+  .profile-top {
+    gap: 12px;
+  }
+
+  .profile-top img {
+    width: 58px;
+    height: 58px;
+  }
+
+  .profile-top h2 {
+    font-size: 21px;
+  }
+
+  .profile-details {
+    grid-template-columns: 1fr;
+  }
+
+  .score-history > div {
+    gap: 8px;
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .student-shell {
+    padding: 0 18px 28px;
+  }
+
+  .student-header {
+    gap: 10px;
+    min-height: 60px;
+  }
+
+  .student-hero {
+    padding: 38px 0 25px;
+  }
+
+  .student-hero h1 {
+    font-size: clamp(38px, 11vw, 48px);
+  }
+
+  .student-hero p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .student-search {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .student-search > svg {
+    flex: 0 0 auto;
+    width: 18px;
+  }
+
+  .student-search input {
+    min-width: 0;
+    font-size: 13px;
+  }
+
+  .student-search button {
+    min-height: 44px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .profile-card {
+    padding: 17px;
+  }
+
+  .profile-details {
+    gap: 8px;
+    padding: 13px 0;
+  }
+
+  .profile-details > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .profile-details small,
+  .profile-details b {
+    font-size: 13px;
+  }
+
+  .score-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .score-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .score-row .student-row {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .score-mini {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 0 10px;
+  }
+
+  .score-mini b,
+  .small-add {
+    font-size: 13px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-field {
+    grid-column: auto;
+  }
+
+  .modal-actions {
+    flex-wrap: wrap;
+  }
+
+  .modal-actions button {
+    flex: 1 1 auto;
+  }
+
+  .random-stage {
+    padding: 20px 14px;
+  }
+
+  .pick-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pick-card {
+    min-height: 260px;
+  }
+
+  .draw-button {
+    width: 100%;
+    min-height: 48px;
+    font-size: 13px;
+  }
+
+  .fair-note {
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .bottom-banner {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .bottom-banner button {
+    margin-left: 0;
+  }
+
+  .chart-labels {
+    gap: 4px;
+    font-size: 10px;
+  }
+
+  .profile-score-grid {
+    gap: 7px;
+  }
+
+  .profile-score-grid > div {
+    padding: 10px;
+  }
+
+  .profile-score-grid small {
+    font-size: 10px;
+  }
+
+  .profile-score-grid b {
+    font-size: 17px;
+  }
+
+  .teacher-login-card {
+    padding: 24px;
+  }
+}
