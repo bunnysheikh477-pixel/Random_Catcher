@@ -25,8 +25,8 @@ type ImportRecord = {
 };
 
 const aliases: Record<ImportField, string[]> = {
-  id: ["id", "studentid", "studentnumber", "rollno", "rollnumber", "roll", "admissionnumber"],
-  name: ["name", "studentname", "fullname", "studentfullname"],
+  id: ["id", "studentid", "studentnumber", "rollno", "rollnumber", "roll", "admissionnumber", "registrationnumber"],
+  name: ["name", "studentname", "studentnames", "fullname", "studentfullname", "nameofstudent", "nameofthestudent"],
   boys: ["boy", "boys", "male", "males", "boynames", "boysstudents", "malestudents"],
   girls: ["girl", "girls", "female", "females", "girlnames", "girlsstudents", "femalestudents"],
   father: ["father", "fathername", "fathersname", "guardian", "guardianname", "parentname"],
@@ -38,7 +38,26 @@ const aliases: Record<ImportField, string[]> = {
 };
 
 function normalizeHeader(value: unknown) {
-  return String(value ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  return String(value ?? "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/^\uFEFF/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function fieldForHeader(value: unknown): ImportField | undefined {
+  const header = normalizeHeader(value);
+  const exactMatch = (Object.keys(aliases) as ImportField[]).find((field) => aliases[field].includes(header));
+  if (exactMatch) return exactMatch;
+  if (header.includes("student") && header.includes("name")) return "name";
+  if (
+    (header.includes("roll") || header.includes("registration") || header.includes("admission")) &&
+    (header.includes("number") || header.includes("no"))
+  ) {
+    return "id";
+  }
+  return undefined;
 }
 
 function cellText(value: ExcelJS.CellValue | string | number | null | undefined) {
@@ -92,8 +111,7 @@ function findHeader(rows: string[][]) {
   for (let rowIndex = 0; rowIndex < Math.min(rows.length, 30); rowIndex += 1) {
     const indexes = new Map<ImportField, number>();
     for (let columnIndex = 0; columnIndex < rows[rowIndex].length; columnIndex += 1) {
-      const header = normalizeHeader(rows[rowIndex][columnIndex]);
-      const match = (Object.keys(aliases) as ImportField[]).find((field) => aliases[field].includes(header));
+      const match = fieldForHeader(rows[rowIndex][columnIndex]);
       if (match && !indexes.has(match)) indexes.set(match, columnIndex);
     }
     if (indexes.has("name") || (indexes.has("boys") && indexes.has("girls"))) return { rowIndex, indexes };
@@ -112,7 +130,9 @@ function parseRows(rows: string[][]) {
   if (!header) {
     return {
       records: [] as ImportRecord[],
-      errors: ["A header row with a Name/Student Name column or Boys and Girls columns was not found."],
+      errors: [
+        "No student-name column was recognized. Add a Name/Student Name column, or separate Boys and Girls columns. Common name headers include Full Name and Name of Student.",
+      ],
     };
   }
 
@@ -251,13 +271,13 @@ async function pdfRows(buffer: Buffer) {
 
       const headerIndex = lines.findIndex((line) =>
         line.items.some((item) =>
-          aliases.name.includes(normalizeHeader(item.text)),
+          fieldForHeader(item.text) === "name",
         ),
       );
       if (headerIndex < 0) continue;
 
       const columns = lines[headerIndex].items
-        .map((item) => ({ ...item, field: (Object.keys(aliases) as ImportField[]).find((field) => aliases[field].includes(normalizeHeader(item.text))) }))
+        .map((item) => ({ ...item, field: fieldForHeader(item.text) }))
         .filter((item): item is typeof item & { field: ImportField } => item.field !== undefined);
       if (!columns.some((column) => column.field === "name")) continue;
       columns.sort((first, second) => first.x - second.x);
